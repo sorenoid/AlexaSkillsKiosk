@@ -17,6 +17,7 @@ public class SkillDetails {
     private String audio;
     private int[] colors;
     private String id;
+    public final static String TAG = "ASK";
 
     public SkillDetails(SkillDetails skillDetails) {
         this.displayName = skillDetails.displayName;
@@ -69,7 +70,7 @@ public class SkillDetails {
     }
 
     public int[] getColors() {
-        Log.d("ASK","returning colors of " + colors[0] + " and " + colors[1]);
+        //Log.d(TAG,"returning colors of " + colors[0] + " and " + colors[1]);
         return colors;
     }
 

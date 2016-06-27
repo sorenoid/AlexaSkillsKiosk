@@ -24,6 +24,7 @@ import java.util.Map;
  */
 public class SkillsData {
     private static boolean loaded = false;
+    public final static String TAG = "ASK";
     private static List<SkillDetails> items;
     private static Map<String, SkillDetails> SkillsMap = new LinkedHashMap<>();
     public static String BROADCAST_LOAD_COMPLETE = "broadcast_load_complete";
@@ -73,11 +74,11 @@ public class SkillsData {
         int eventType = parser.getEventType();
         do {
             name = parser.getName();
-            Log.d("ASK", "loading skils map with name " + name);
+           // Log.d(TAG, "loading skils map with name " + name);
             if (eventType == parser.START_DOCUMENT) {
-                Log.d("ASK", "start doc");
+             //   Log.d(TAG, "start doc");
             } else if (eventType == parser.END_DOCUMENT) {
-                Log.d("ASK", "end doc");
+               // Log.d(TAG, "end doc");
             } else if (eventType == parser.START_TAG) {
 
                 int numAttribs = parser.getAttributeCount();
@@ -85,19 +86,19 @@ public class SkillsData {
                     dItem = new SkillDetails(parser);
 
                 }
-                for (int i = 0; i < numAttribs; i++) {
-                    Log.d("ASK", "START TAG event name " + name + " attribute "
-                            + i + " has key " + parser.getAttributeName(i) + " , value " + parser.getAttributeValue(i));
-                }
+//                for (int i = 0; i < numAttribs; i++) {
+//                    Log.d(TAG, "START TAG event name " + name + " attribute "
+//                            + i + " has key " + parser.getAttributeName(i) + " , value " + parser.getAttributeValue(i));
+//                }
 
             } else if (eventType == parser.END_TAG) {
-                Log.d("ASK", "end tag");
+                Log.d(TAG, "end tag");
                 //LogUtils.Log(LogUtils.Area.SensorMap, null, "END TAG event name " + name + " text of skill event " + parser.getText());
                 if (TextUtils.equals(name, "Skill")) {
                     if (null != dItem) {
                         // LogUtils.Log(LogUtils.Area.Link, null, "adding skill " + skill.id + " with auto id " + skill.autoId + " to map");
                         //if (skill.dataType.equals(Sensor.DataType.digital)) {
-                        Log.d("ASK", "loading detail " + dItem);
+                       // Log.d(TAG, "loading detail " + dItem);
                         SkillsMap.put(dItem.getId(), dItem);
                     }
 
@@ -105,7 +106,7 @@ public class SkillsData {
                 }
 
             } else if (eventType == parser.TEXT) {
-                Log.d("ASK", "text");
+                Log.d(TAG, "text");
                 //  LogUtils.Log(LogUtils.Area.SensorMap, null, "text event name " + name + " text of skill event " + parser.getText());
 
             }
@@ -128,7 +129,7 @@ public class SkillsData {
             SkillDetails detail = SkillsMap.get(id);
             int index = (colorIndex % xIndex);
             detail.setColors(primaryColors.getColor(index, 0), secondaryColors.getColor(index, 0));
-            Log.d("ASK", "setting colors for detail with id " + id + " to " + detail.getColors()[0]);
+           // Log.d(TAG, "setting colors for detail with id " + id + " to " + detail.getColors()[0]);
             colorIndex++;
         }
 

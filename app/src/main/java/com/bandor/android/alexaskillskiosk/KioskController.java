@@ -55,7 +55,7 @@ public class KioskController {
      */
     protected void appendItem(SkillDetails detail) {
         // Add new item views and set the item layout's id
-        Log.d("ASK", "appending itme to view");
+        Log.d(TAG, "appending itme to view");
         final ViewGroup topHorizontalLayout = (ViewGroup) mainControllerLayout.findViewById(R.id.top_horizontal_layout);
         appendTextItem(topHorizontalLayout, detail);
     }
@@ -70,7 +70,7 @@ public class KioskController {
     @SuppressWarnings("deprecation")
     private ViewGroup appendTextItem(ViewGroup parent, final SkillDetails detail) {
         final ViewGroup itemLayout = (ViewGroup) activity.getLayoutInflater().inflate(R.layout.ask_item_text, null);
-        Log.d("ASK", "appending text item to view");
+        Log.d(TAG, "appending text item to view");
         // Set name
         TextView nameLayout = (TextView) itemLayout.findViewById(R.id.name);
         nameLayout.setText(detail.getDisplayName());

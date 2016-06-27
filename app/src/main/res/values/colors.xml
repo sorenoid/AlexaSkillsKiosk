@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <!-- Useful colors for all sorts of places -->
+
+
+    <!-- skill colors in the order they should be used -->
+    <array name="column_colors_primary">
+        <item>#d31a23</item>
+        <item>#3345AA</item>
+        <item>#bab21e</item>
+        <item>#3b8acc</item>
+        <item>#e26095</item>
+        <item>#5b2c63</item>
+        <item>#000000</item>
+        <!-- Color used for "X" -->
+    </array>
+
+    <!-- secondary skill colors for gradients in the detail view
+        MUST relate to above array  -->
+    <array name="column_colors_secondary">
+        <item>#d31a23</item>
+        <item>#3345AA</item>
+        <item>#bab21e</item>
+        <item>#3b8acc</item>
+        <item>#e26095</item>
+        <item>#5b2c63</item>
+        <item>#000000</item>
+        <!-- Color used for "X" -->
+    </array>
+
+
+</resources>
+
+

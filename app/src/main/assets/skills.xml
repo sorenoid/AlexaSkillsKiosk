@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- WARNING: manually editing this file may break functionality -->
+<SkillsMap xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="skills.xsd"  Version="0.6">
+    <Skill name="Flash Briefing" audio="flash-briefing.m4a" id="flash_briefing"
+        sentence="Alexa, play my flash briefing." ></Skill>
+</SkillsMap>

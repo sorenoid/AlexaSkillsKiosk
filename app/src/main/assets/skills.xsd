@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<schema xmlns:vsts="http://www.bandorsoftware.com/schemas/skillsmap/"
+    elementFormDefault="qualified"
+    targetNamespace="http://www.bandorsoftware.com/schemas/skillsmap/" version="0.5"
+    xmlns="http://www.w3.org/2001/XMLSchema">
+
+    <element name='SkillsMap'>
+        <complexType>
+            <sequence>
+                <element maxOccurs='unbounded' minOccurs='0' ref='vsts:Skill' />
+            </sequence>
+            <attribute name='Version' type='string' use='required' />
+        </complexType>
+
+    </element>
+
+    <element name='Skill'>
+        <complexType>
+
+            <!-- Sensor ids must be unique. A better choice than string type would be the schema ID and
+            IDREF types. However, these must be valid xml NCName. It would also be nice to have a standard
+            format for these (and the Calibration and Unit) <id> strings. -->
+            <attribute name='id' type='string' use='required' />
+            <!-- The leading underscore in the element name flags a translatable string element. -->
+            <attribute name='name' type='string' use='required' />
+            <attribute name='sentence' type='string' use='required' />
+            <attribute name='audio' type='string' use='required' />
+        </complexType>
+    </element>
+</schema>

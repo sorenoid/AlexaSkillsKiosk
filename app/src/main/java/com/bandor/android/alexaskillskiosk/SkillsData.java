@@ -92,11 +92,11 @@ public class SkillsData {
 
             } else if (eventType == parser.END_TAG) {
                 Log.d("ASK", "end tag");
-                //LogUtils.Log(LogUtils.Area.SensorMap, null, "END TAG event name " + name + " text of sensor event " + parser.getText());
+                //LogUtils.Log(LogUtils.Area.SensorMap, null, "END TAG event name " + name + " text of skill event " + parser.getText());
                 if (TextUtils.equals(name, "Skill")) {
                     if (null != dItem) {
-                        // LogUtils.Log(LogUtils.Area.Link, null, "adding sensor " + sensor.id + " with auto id " + sensor.autoId + " to map");
-                        //if (sensor.dataType.equals(Sensor.DataType.digital)) {
+                        // LogUtils.Log(LogUtils.Area.Link, null, "adding skill " + skill.id + " with auto id " + skill.autoId + " to map");
+                        //if (skill.dataType.equals(Sensor.DataType.digital)) {
                         Log.d("ASK", "loading detail " + dItem);
                         SkillsMap.put(dItem.getId(), dItem);
                     }
@@ -106,7 +106,7 @@ public class SkillsData {
 
             } else if (eventType == parser.TEXT) {
                 Log.d("ASK", "text");
-                //  LogUtils.Log(LogUtils.Area.SensorMap, null, "text event name " + name + " text of sensor event " + parser.getText());
+                //  LogUtils.Log(LogUtils.Area.SensorMap, null, "text event name " + name + " text of skill event " + parser.getText());
 
             }
             eventType = parser.nextToken();
@@ -121,7 +121,7 @@ public class SkillsData {
         int colorIndex = 0;
         int xIndex = primaryColors.length() - 1;
 
-        // Sort the datasets by the timestamps of their columns
+        // Sort the datasets by the timestamps of their skills
         List<String> detailOrder = SkillsData.sortByTimeStamp(/* descending */false);
         for (String id : detailOrder) {
 

@@ -115,8 +115,8 @@ public class SkillsData {
     }
 
     public static synchronized void colorize(Context context) {
-        TypedArray primaryColors = context.getResources().obtainTypedArray(R.array.column_colors_primary);
-        TypedArray secondaryColors = context.getResources().obtainTypedArray(R.array.column_colors_secondary);
+        TypedArray primaryColors = context.getResources().obtainTypedArray(R.array.skills_colors_primary);
+        TypedArray secondaryColors = context.getResources().obtainTypedArray(R.array.skills_colors_secondary);
 
         int colorIndex = 0;
         int xIndex = primaryColors.length() - 1;

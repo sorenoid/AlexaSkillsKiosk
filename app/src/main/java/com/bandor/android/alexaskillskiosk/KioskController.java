@@ -99,7 +99,6 @@ public class KioskController {
 
     private void playSentenceAudio(SkillDetails detail) {
         try {
-
             if (mediaPlayer.isPlaying()) {
                 mediaPlayer.stop();
                 mediaPlayer.release();

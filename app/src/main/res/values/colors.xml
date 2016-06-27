@@ -7,7 +7,7 @@
 
 
     <!-- skill colors in the order they should be used -->
-    <array name="column_colors_primary">
+    <array name="skills_colors_primary">
         <item>#d31a23</item>
         <item>#3345AA</item>
         <item>#bab21e</item>
@@ -20,7 +20,7 @@
 
     <!-- secondary skill colors for gradients in the detail view
         MUST relate to above array  -->
-    <array name="column_colors_secondary">
+    <array name="skills_colors_secondary">
         <item>#d31a23</item>
         <item>#3345AA</item>
         <item>#bab21e</item>

@@ -122,15 +122,19 @@ public class SkillsData {
 
             MatrixCursor searchableSkills = new MatrixCursor(columns);
             int i = 0;
-            if (TextUtils.isEmpty(substr)) {
+            List<SkillDetails> subsetOfSkills = new LinkedList<>();
+            if (!TextUtils.isEmpty(substr)) {
                 for (String name : SearchMap.keySet()) {
-                    if (name.contains(substr)) {
+                    String lowerName = name.toLowerCase();
+                    String lowerSubStr = substr.toLowerCase();
+                    if (lowerName.contains(lowerSubStr)) {
                         SkillDetails skillDetails = SkillsMap.get(SearchMap.get(name));
                         temp[0] = i;
                         temp[1] = skillDetails.getId();
                         temp[2] = skillDetails.getDisplayName();
 
                         searchableSkills.addRow(temp);
+                        subsetOfSkills.add(skillDetails);
                         i++;
                     }
                 }
@@ -138,7 +142,7 @@ public class SkillsData {
 
             // SearchView
             //SearchManager manager = (SearchManager) kioskActivity.getSystemService(Context.SEARCH_SERVICE);
-            search.setSuggestionsAdapter(new SkillsSuggestionAdapter(kioskActivity, searchableSkills, getItems()));
+            search.setSuggestionsAdapter(new SkillsSuggestionAdapter(kioskActivity, searchableSkills, subsetOfSkills));
 
         }
 

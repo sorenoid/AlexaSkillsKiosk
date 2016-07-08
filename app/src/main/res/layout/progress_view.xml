@@ -8,11 +8,13 @@
     android:orientation="vertical"
     android:visibility="gone">
 
-    <ProgressBar
-        android:layout_width="@dimen/progress_spinner_size"
-        android:layout_height="@dimen/progress_spinner_size"
-        android:layout_gravity="center"
-        android:indeterminate="true"/>
+    <!--<ProgressBar-->
+        <!--android:layout_width="@dimen/progress_spinner_size"-->
+        <!--android:layout_height="@dimen/progress_spinner_size"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:indeterminate="true"/>-->
+<!--way too cpu bound for a spinner when we are loading skills in the main thread-->
+
 
     <TextView
         android:id="@+id/progress_message"

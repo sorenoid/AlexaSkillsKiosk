@@ -11,16 +11,7 @@
         android:padding="@dimen/margin_20dp">
 
         <TextView
-            android:id="@+id/name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/textsize_30sp"/>
-
-        <TextView
-            android:id="@+id/vendor_name"
+            android:id="@+id/example_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/name"
@@ -29,13 +20,6 @@
             android:textSize="@dimen/textsize_22sp"/>
 
     </RelativeLayout>
-
-    <!-- Column id helps us identify which skill this view is for.  This will never be shown to the user -->
-    <TextView
-        android:id="@+id/detail_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"/>
 
     <View
         android:layout_width="wrap_content"

@@ -12,7 +12,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.bandor.android.alexaskillskiosk.KioskActivity">
 
-    <!-- Meters -->
+    <!-- Skills -->
     <include
         android:id="@+id/main_kiosk_layout"
         layout="@layout/main_kiosk_layout" />
@@ -22,13 +22,6 @@
     <include
         android:id="@+id/progress_layout"
         layout="@layout/progress_view" />
-
-    <!-- Splash View -->
-    <!--<include-->
-        <!--android:id="@+id/splash_layout"-->
-        <!--layout="@layout/gw_getting_started"-->
-        <!--android:visibility="gone" />-->
-
 
 </FrameLayout>
 

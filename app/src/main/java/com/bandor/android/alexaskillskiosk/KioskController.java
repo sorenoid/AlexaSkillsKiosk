@@ -1,5 +1,6 @@
 package com.bandor.android.alexaskillskiosk;
 
+import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.drawable.GradientDrawable;
 import android.media.MediaPlayer;
@@ -15,6 +16,7 @@ import android.widget.TextView;
  */
 public class KioskController {
     private static final String TAG = "ASKCTRL";
+    public static final String EXTRA_DETAILS = "extraDetails";
     private final KioskActivity activity;
     private MediaPlayer mediaPlayer;
     private ViewGroup mainControllerLayout;
@@ -81,8 +83,8 @@ public class KioskController {
         nameLayout.setText(detail.getDisplayName());
 
         // Set value
-        final TextView sentenceLayout = (TextView) itemLayout.findViewById(R.id.sentence);
-        sentenceLayout.setText(detail.getSentence());
+        final TextView vendorName = (TextView) itemLayout.findViewById(R.id.vendor_name);
+        vendorName.setText(detail.getVendor());
 
         // Set background gradient
         GradientDrawable drawable = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, detail.getColors());
@@ -95,7 +97,10 @@ public class KioskController {
         itemLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                playSentenceAudio(detail);
+                Intent detailsIntent = new Intent(activity, DetailsActivity.class);
+                detailsIntent.putExtra(KioskController.EXTRA_DETAILS, detail);
+                activity.startActivity(detailsIntent);
+                //playSentenceAudio(detail);
             }
         });
         parent.addView(itemLayout);
@@ -123,7 +128,7 @@ public class KioskController {
             descriptor.close();
 
             mediaPlayer.prepare();
-            mediaPlayer.setVolume(1f, 1f);
+            //mediaPlayer.setVolume(4f, 4f);
             mediaPlayer.setLooping(false);
             mediaPlayer.start();
         } catch (Exception e) {

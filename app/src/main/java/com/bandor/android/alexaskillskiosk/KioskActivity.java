@@ -26,6 +26,7 @@ public class KioskActivity extends AppCompatActivity {
             init();
         }
     };
+    private boolean init;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,11 +35,6 @@ public class KioskActivity extends AppCompatActivity {
 
         //data model
         SkillsData.load(this);
-
-        //set up the searchable "database" of skills
-        String[] columns = new String[]{"_id", "text"};
-        Object[] temp = new Object[]{0, "default"};
-
 
         //layout controller
         createController();
@@ -49,9 +45,9 @@ public class KioskActivity extends AppCompatActivity {
     protected void onResume() {
         //call here in case the broadcast (below) came in before we were registered for it.
         // SkillsData.reload(this);
-        if (SkillsData.getLoaded()) {
+        if (SkillsData.getLoaded() && !init) {
             init();
-        } else {
+        } else if (!SkillsData.getLoaded()) {
             showProgressView(getString(R.string.loading_skills));
 
         }
@@ -77,12 +73,12 @@ public class KioskActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextSubmit(String query) {
-                return false;
+                closeOptionsMenu();
+                return true;
             }
 
             @Override
             public boolean onQueryTextChange(String query) {
-
                 loadPossibleSkills(query);
                 return true;
             }
@@ -104,6 +100,7 @@ public class KioskActivity extends AppCompatActivity {
         SkillsData.colorize(this);
         controller.invalidate();
         hideProgressView();
+        init = true;
     }
 
     /**
@@ -112,7 +109,6 @@ public class KioskActivity extends AppCompatActivity {
      * @param message optional message to show underneath the spinner
      */
     public void showProgressView(String message) {
-        Log.w("VST-GAa", "showing progress view");
         ViewGroup progressLayout = (ViewGroup) findViewById(R.id.progress_layout);
         if (null != progressLayout) {
             progressLayout.setVisibility(View.VISIBLE);

@@ -3,4 +3,5 @@
     <string name="ellipsis">...</string>
     <string name="search">Search Skills</string>
     <string name="loading_skills">Loading Skills</string>
+    <string name="example_interactions">Example Interactions</string>
 </resources>

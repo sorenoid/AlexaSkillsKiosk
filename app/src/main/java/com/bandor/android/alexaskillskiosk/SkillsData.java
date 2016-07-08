@@ -93,15 +93,17 @@ public class SkillsData {
 
     /**
      * add a skill to the map. called from bg thread.
-     *
      * @param id
      * @param skillName
      * @param skillDesc
      * @param launchPhrase
+     * @param avgRating
+     * @param exampleInteractions
+     * @param phrase
      */
-    public static void loadSkill(String id, String skillName, String skillDesc, String launchPhrase) {
+    public static void loadSkill(String id, String skillName, String skillDesc, String launchPhrase, Integer avgRating, List<String> exampleInteractions, String phrase) {
         synchronized (SkillsMap) {
-            SkillDetails skillDetails = new SkillDetails(id, skillName, skillDesc, launchPhrase);
+            SkillDetails skillDetails = new SkillDetails(id, skillName, skillDesc, launchPhrase, avgRating, exampleInteractions, phrase);
             //Log.d(TAG, "adding skill: " + skillDetails);
             SkillsMap.put(id, skillDetails);
             SearchMap.put(skillName, id);
@@ -148,4 +150,14 @@ public class SkillsData {
 
     }
 
+    /**
+     * @param name the name of the skill. note skills can have the same name
+     *             (e.g. there are about 5 skills named "Cat Facts")
+     * @return the id of the skill with the given name
+     *         (at least the one that is in the map).
+     *  TODO: fix the mapping from name to id to account for name collisions.
+     */
+    public static String getIdFromName(String name) {
+        return SearchMap.get(name);
+    }
 }

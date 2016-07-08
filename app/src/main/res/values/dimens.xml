@@ -9,4 +9,5 @@
     <dimen name="progress_spinner_size">40dp</dimen>
     <dimen name="margin_10dp">10dp</dimen>
     <dimen name="textsize_20sp">20sp</dimen>
+    <dimen name="margin_30dp">30dp</dimen>
 </resources>

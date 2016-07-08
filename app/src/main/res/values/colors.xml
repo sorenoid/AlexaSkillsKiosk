@@ -4,7 +4,7 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <!-- Useful colors for all sorts of places -->
-
+    <color name="light_grey">#cccccc</color>
 
     <!-- skill colors in the order they should be used -->
     <array name="skills_colors_primary">

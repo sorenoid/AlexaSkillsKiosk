@@ -4,20 +4,18 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.content.res.TypedArray;
+import android.database.MatrixCursor;
 import android.os.AsyncTask;
+import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
-import android.util.Log;
-
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+
 
 /**
  * Created by sorenoid on 6/24/16.
@@ -25,8 +23,10 @@ import java.util.Map;
 public class SkillsData {
     private static boolean loaded = false;
     public final static String TAG = "ASK";
-    private static List<SkillDetails> items;
+    private static List<SkillDetails> SkillsList;
     private static Map<String, SkillDetails> SkillsMap = new LinkedHashMap<>();
+    private static Map<String, String> SearchMap = new LinkedHashMap<>();
+
     public static String BROADCAST_LOAD_COMPLETE = "broadcast_load_complete";
 
     public static SkillDetails getDetailById(String id) {
@@ -63,57 +63,6 @@ public class SkillsData {
         loaded = b;
     }
 
-    //note: called from non ui thread!
-    public static synchronized void loadMap(XmlPullParser parser) throws IOException, XmlPullParserException {
-
-        parser.nextTag();
-        parser.require(XmlPullParser.START_TAG, null, "SkillsMap");
-
-        String name = parser.getName();
-        SkillDetails dItem = null;
-        int eventType = parser.getEventType();
-        do {
-            name = parser.getName();
-           // Log.d(TAG, "loading skils map with name " + name);
-            if (eventType == parser.START_DOCUMENT) {
-             //   Log.d(TAG, "start doc");
-            } else if (eventType == parser.END_DOCUMENT) {
-               // Log.d(TAG, "end doc");
-            } else if (eventType == parser.START_TAG) {
-
-                int numAttribs = parser.getAttributeCount();
-                if (TextUtils.equals(name, "Skill")) {
-                    dItem = new SkillDetails(parser);
-
-                }
-//                for (int i = 0; i < numAttribs; i++) {
-//                    Log.d(TAG, "START TAG event name " + name + " attribute "
-//                            + i + " has key " + parser.getAttributeName(i) + " , value " + parser.getAttributeValue(i));
-//                }
-
-            } else if (eventType == parser.END_TAG) {
-                Log.d(TAG, "end tag");
-                //LogUtils.Log(LogUtils.Area.SensorMap, null, "END TAG event name " + name + " text of skill event " + parser.getText());
-                if (TextUtils.equals(name, "Skill")) {
-                    if (null != dItem) {
-                        // LogUtils.Log(LogUtils.Area.Link, null, "adding skill " + skill.id + " with auto id " + skill.autoId + " to map");
-                        //if (skill.dataType.equals(Sensor.DataType.digital)) {
-                       // Log.d(TAG, "loading detail " + dItem);
-                        SkillsMap.put(dItem.getId(), dItem);
-                    }
-
-                    dItem = null;
-                }
-
-            } else if (eventType == parser.TEXT) {
-                Log.d(TAG, "text");
-                //  LogUtils.Log(LogUtils.Area.SensorMap, null, "text event name " + name + " text of skill event " + parser.getText());
-
-            }
-            eventType = parser.nextToken();
-        } while (eventType != parser.END_DOCUMENT);
-
-    }
 
     public static synchronized void colorize(Context context) {
         TypedArray primaryColors = context.getResources().obtainTypedArray(R.array.skills_colors_primary);
@@ -129,7 +78,7 @@ public class SkillsData {
             SkillDetails detail = SkillsMap.get(id);
             int index = (colorIndex % xIndex);
             detail.setColors(primaryColors.getColor(index, 0), secondaryColors.getColor(index, 0));
-           // Log.d(TAG, "setting colors for detail with id " + id + " to " + detail.getColors()[0]);
+            // Log.d(TAG, "setting colors for detail with id " + id + " to " + detail.getColors()[0]);
             colorIndex++;
         }
 
@@ -144,6 +93,7 @@ public class SkillsData {
 
     /**
      * add a skill to the map. called from bg thread.
+     *
      * @param id
      * @param skillName
      * @param skillDesc
@@ -152,13 +102,46 @@ public class SkillsData {
     public static void loadSkill(String id, String skillName, String skillDesc, String launchPhrase) {
         synchronized (SkillsMap) {
             SkillDetails skillDetails = new SkillDetails(id, skillName, skillDesc, launchPhrase);
-            Log.d(TAG, "adding skill: " + skillDetails);
+            //Log.d(TAG, "adding skill: " + skillDetails);
             SkillsMap.put(id, skillDetails);
+            SearchMap.put(skillName, id);
         }
     }
 
     public static void reload(Activity activity) {
         SkillsMap.clear();
+        SearchMap.clear();
         load(activity);
     }
+
+    public static void fillCursor(KioskActivity kioskActivity, String substr, final SearchView search) {
+        if (!SkillsMap.isEmpty()) {
+            List<SkillDetails> matches = new LinkedList<SkillDetails>();
+            String[] columns = new String[]{"_id", "view_id", "text"};
+            Object[] temp = new Object[]{0, "default", "default"};
+
+            MatrixCursor searchableSkills = new MatrixCursor(columns);
+            int i = 0;
+            if (TextUtils.isEmpty(substr)) {
+                for (String name : SearchMap.keySet()) {
+                    if (name.contains(substr)) {
+                        SkillDetails skillDetails = SkillsMap.get(SearchMap.get(name));
+                        temp[0] = i;
+                        temp[1] = skillDetails.getId();
+                        temp[2] = skillDetails.getDisplayName();
+
+                        searchableSkills.addRow(temp);
+                        i++;
+                    }
+                }
+            }
+
+            // SearchView
+            //SearchManager manager = (SearchManager) kioskActivity.getSystemService(Context.SEARCH_SERVICE);
+            search.setSuggestionsAdapter(new SkillsSuggestionAdapter(kioskActivity, searchableSkills, getItems()));
+
+        }
+
+    }
+
 }

@@ -14,6 +14,7 @@ import android.widget.TextView;
  * Dynamically adds items (one for each skill) to the main layout
  */
 public class KioskController {
+    private static final String TAG = "ASKCTRL";
     private final KioskActivity activity;
     private MediaPlayer mediaPlayer;
     private ViewGroup mainControllerLayout;
@@ -26,6 +27,12 @@ public class KioskController {
     public KioskController(KioskActivity activity) {
         this.activity = activity;
         this.mediaPlayer = new MediaPlayer();
+        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            public void onCompletion(MediaPlayer mp) {
+                mp.stop();
+                mp.reset();
+            }
+        });
     }
 
     /**
@@ -55,7 +62,6 @@ public class KioskController {
      */
     protected void appendItem(SkillDetails detail) {
         // Add new item views and set the item layout's id
-        Log.d(TAG, "appending itme to view");
         final ViewGroup topHorizontalLayout = (ViewGroup) mainControllerLayout.findViewById(R.id.top_horizontal_layout);
         appendTextItem(topHorizontalLayout, detail);
     }
@@ -70,7 +76,6 @@ public class KioskController {
     @SuppressWarnings("deprecation")
     private ViewGroup appendTextItem(ViewGroup parent, final SkillDetails detail) {
         final ViewGroup itemLayout = (ViewGroup) activity.getLayoutInflater().inflate(R.layout.ask_item_text, null);
-        Log.d(TAG, "appending text item to view");
         // Set name
         TextView nameLayout = (TextView) itemLayout.findViewById(R.id.name);
         nameLayout.setText(detail.getDisplayName());
@@ -103,6 +108,13 @@ public class KioskController {
                 mediaPlayer.stop();
                 mediaPlayer.release();
                 mediaPlayer = new MediaPlayer();
+                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    public void onCompletion(MediaPlayer mp) {
+                        mp.stop();
+                        mp.reset();
+                    }
+                });
+
             }
 
             String audioFile = detail.getAudioFile();

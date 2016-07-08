@@ -46,7 +46,7 @@ public class SkillsData {
         AssetManager assetManager = activity.getAssets();
         InputStream skillStream = null;
         try {
-            skillStream = assetManager.open("skills.xml");
+            skillStream = assetManager.open("skills-public.json");
             LoadSkillsTask loader = new LoadSkillsTask(activity);
             loader.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, skillStream);
         } catch (IOException e) {
@@ -140,5 +140,25 @@ public class SkillsData {
 
     private static List<String> sortByTimeStamp(boolean b) {
         return new LinkedList<>(SkillsMap.keySet());
+    }
+
+    /**
+     * add a skill to the map. called from bg thread.
+     * @param id
+     * @param skillName
+     * @param skillDesc
+     * @param launchPhrase
+     */
+    public static void loadSkill(String id, String skillName, String skillDesc, String launchPhrase) {
+        synchronized (SkillsMap) {
+            SkillDetails skillDetails = new SkillDetails(id, skillName, skillDesc, launchPhrase);
+            Log.d(TAG, "adding skill: " + skillDetails);
+            SkillsMap.put(id, skillDetails);
+        }
+    }
+
+    public static void reload(Activity activity) {
+        SkillsMap.clear();
+        load(activity);
     }
 }

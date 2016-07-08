@@ -35,6 +35,7 @@ public class KioskActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         //call here in case the broadcast (below) came in before we were registered for it.
+       // SkillsData.reload(this);
         if (SkillsData.getLoaded()) {
             init();
         }

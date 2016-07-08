@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">AlexaSkillsKiosk</string>
+    <string name="app_name">Alexa Skills Kiosk</string>
+    <string name="ellipsis">...</string>
 </resources>

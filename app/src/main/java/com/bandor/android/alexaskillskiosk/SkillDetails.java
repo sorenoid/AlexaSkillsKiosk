@@ -1,6 +1,5 @@
 package com.bandor.android.alexaskillskiosk;
 
-import android.hardware.Sensor;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -16,6 +15,7 @@ public class SkillDetails {
     private String sentence;
     private String audio;
     private int[] colors;
+    private String skillDesc;
     private String id;
     public final static String TAG = "ASK";
 
@@ -51,6 +51,15 @@ public class SkillDetails {
 
             }
         }
+    }
+
+    public SkillDetails(String id, String skillName, String skillDesc, String launchPhrase) {
+        displayName = skillName;
+        sentence = "Alexa, open " + launchPhrase;
+        this.skillDesc = skillDesc;
+        this.id = id;
+        this.audio = "flash-briefing.m4a";
+        this.colors = new int[2];
     }
 
     public String getDisplayName() {
